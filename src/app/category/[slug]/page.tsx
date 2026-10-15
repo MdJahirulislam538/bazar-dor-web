@@ -20,19 +20,12 @@ async function CategoryContent({ params, searchParams }: CategoryPageProps) {
 
 
   // Convert route slug to category query value
-  const categoryName = decodeURIComponent(slug).replace(/-/g, " ");
-
-  let safeProducts: Product[] = [];
-
-  try {
-    const products: unknown = await getProductsByCategory(categoryName);
-
-    if (Array.isArray(products)) {
-      safeProducts = products as Product[];
-    }
-  } catch (error) {
-    console.error("Failed to load category products:", error);
-  }
+  const categorySlug = decodeURIComponent(slug);
+  const categoryName = categorySlug.replace(/-/g, " ");
+  const products: unknown = await getProductsByCategory(categorySlug);
+  const safeProducts: Product[] = Array.isArray(products)
+    ? (products as Product[])
+    : [];
   
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-[42px]">

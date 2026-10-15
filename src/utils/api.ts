@@ -1,4 +1,6 @@
 // Base URL for Programming Hero Bazar Dor API
+import { unstable_rethrow } from "next/navigation";
+
 const BASE_URL =
   "https://openapi.programming-hero.com/api/bazardor";
 
@@ -17,6 +19,7 @@ export async function getAllProducts() {
 
     return Array.isArray(json) ? json : json?.data || [];
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error fetching all products:", error);
     return [];
   }
@@ -64,6 +67,7 @@ export async function getProductsByCategory(
 
     return Array.isArray(json) ? json : json?.data || [];
   } catch (error) {
+    unstable_rethrow(error);
     console.error(`Error fetching category ${categoryName}:`, error);
     return [];
   }
